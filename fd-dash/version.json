@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "name": "FD Portfolio",
+  "description": "Personal fixed deposit portfolio dashboard for Indian banks",
+  "icon": "icons/icon-512.png",
+  "updated": "2026-04-11",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-04-11",
+      "notes": "Initial release — responsive dashboard, receipt OCR, Google Sheets sync, offline PWA"
+    }
+  ]
+}
