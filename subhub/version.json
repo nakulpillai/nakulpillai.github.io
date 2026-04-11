@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0",
+  "name": "SubHub",
+  "description": "Mobile-first sublet marketplace for Toronto and Montreal",
+  "icon": "icon.png",
+  "updated": "2026-04-11",
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-04-11",
+      "notes": "Prototype release with listing feed, search, detail pages, create form, and auth UI"
+    }
+  ]
+}
