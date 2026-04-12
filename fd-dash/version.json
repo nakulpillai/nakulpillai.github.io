@@ -1,10 +1,15 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
   "updated": "2026-04-12",
   "changelog": [
+    {
+      "version": "1.0.4",
+      "date": "2026-04-12",
+      "notes": "Add inactivity lock screen with Face ID and PIN unlock after 1 min"
+    },
     {
       "version": "1.0.3",
       "date": "2026-04-12",
