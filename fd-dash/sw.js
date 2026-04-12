@@ -1,16 +1,20 @@
 const CACHE_NAME = 'fd-dash-v1'
+const BASE = self.registration.scope
+
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
+  './',
+  './index.html',
+  './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
 ]
 
 // Install: cache static shell
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then((cache) =>
+      cache.addAll(STATIC_ASSETS.map((a) => new URL(a, BASE).href))
+    )
   )
   self.skipWaiting()
 })
@@ -42,7 +46,7 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
           return response
         })
-        .catch(() => caches.match('/index.html'))
+        .catch(() => caches.match(new URL('./index.html', BASE).href))
     )
     return
   }
