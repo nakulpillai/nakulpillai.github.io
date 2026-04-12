@@ -1,10 +1,15 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
   "updated": "2026-04-12",
   "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "2026-04-12",
+      "notes": "Add profile settings sidebar with fixed Save button"
+    },
     {
       "version": "1.0.1",
       "date": "2026-04-12",
