@@ -1,10 +1,15 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.3",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
   "updated": "2026-04-12",
   "changelog": [
+    {
+      "version": "1.0.3",
+      "date": "2026-04-12",
+      "notes": "Improve receipt OCR — higher resolution, cross-validation for rotated receipts and Indian amounts"
+    },
     {
       "version": "1.0.2",
       "date": "2026-04-12",
