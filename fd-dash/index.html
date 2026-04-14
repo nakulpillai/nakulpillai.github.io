@@ -6,14 +6,34 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="theme-color" content="#3b82f6" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://apis.google.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.anthropic.com https://sheets.googleapis.com https://www.googleapis.com https://content-sheets.googleapis.com https://drive.googleapis.com; frame-src https://accounts.google.com; img-src 'self' data: blob:;" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>FD Portfolio</title>
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="icons/icon-192.png" />
-    <script type="module" crossorigin src="/fd-dash/assets/index-z3v5tUuu.js"></script>
-    <link rel="stylesheet" crossorigin href="/fd-dash/assets/index-Dj0zXkoC.css">
+    <script type="module" crossorigin src="/fd-dash/assets/index-B-mcjnOY.js"></script>
+    <link rel="stylesheet" crossorigin href="/fd-dash/assets/index-BesMuyi7.css">
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Pre-render security: if lock is enabled, hide content until React takes over
+      // This prevents a flash of sensitive data before the lock screen renders
+      if (localStorage.getItem('fd-dash-locked') === '1' ||
+          localStorage.getItem('fd-dash-pin-hash')) {
+        document.documentElement.style.visibility = 'hidden'
+        window.addEventListener('DOMContentLoaded', () => {
+          // Give React a frame to mount the lock screen, then reveal
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              document.documentElement.style.visibility = ''
+            })
+          })
+        })
+      }
+    </script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

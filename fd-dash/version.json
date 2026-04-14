@@ -1,10 +1,15 @@
 {
-  "version": "1.0.6",
+  "version": "1.0.7",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
-  "updated": "2026-04-13",
+  "updated": "2026-04-14",
   "changelog": [
+    {
+      "version": "1.0.7",
+      "date": "2026-04-14",
+      "notes": "Add security hardening — encrypted localStorage, PBKDF2 PIN hashing, CSP headers, robust lock screen"
+    },
     {
       "version": "1.0.6",
       "date": "2026-04-13",
