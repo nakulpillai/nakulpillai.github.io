@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Hanuman Chalisa</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f0a05">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0f0a05;
+    --accent-gold: #d4af37;
+    --saffron: #ff9933;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Rowdies', cursive;
+    background: var(--bg-deep);
+    color: #f5e6d3;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Loading screen */
+  .loader {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--bg-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: opacity 0.5s ease;
+  }
+
+  .loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .loader img {
+    width: 180px;
+    height: auto;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  .loader-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--accent-gold);
+    letter-spacing: 0.25em;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+  }
+
+  .app-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-gradient-mesh {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(circle at 50% -20%, #4a2a10 0%, #0f0a05 80%);
+  }
+
+  header {
+    padding: env(safe-area-inset-top, 12px) 20px 10px;
+    padding-top: calc(env(safe-area-inset-top, 12px) + 12px);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 60;
+  }
+
+  #prayer-scroll {
+    flex: 1;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    padding-bottom: 40vh;
+    padding-top: 40vh;
+    z-index: 10;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #prayer-scroll::-webkit-scrollbar { display: none; }
+
+  .verse-container {
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 24px;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 0.1;
+    transform: scale(0.85);
+    filter: blur(8px);
+  }
+
+  .verse-container.active {
+    opacity: 1;
+    transform: scale(1.05);
+    filter: blur(0);
+  }
+
+  .verse-text {
+    font-size: clamp(1rem, 3.5vw, 1.3rem);
+    line-height: 1.8;
+    text-align: center;
+    font-weight: 300;
+    white-space: pre-line;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+
+  .verse-num {
+    font-family: 'Cinzel', serif;
+    color: var(--accent-gold);
+    font-size: 0.65rem;
+    margin-bottom: 16px;
+    letter-spacing: 0.25em;
+    opacity: 0.6;
+  }
+
+  .title-verse .verse-text {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    font-weight: 700;
+    color: var(--accent-gold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+
+  .focus-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 340px;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    pointer-events: none;
+    z-index: 5;
+    background: linear-gradient(
+      to bottom,
+      rgba(212, 175, 55, 0.02),
+      transparent 20%,
+      transparent 80%,
+      rgba(212, 175, 55, 0.02)
+    );
+  }
+
+  .mobile-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 24px calc(env(safe-area-inset-bottom, 16px) + 16px);
+    z-index: 50;
+    background: linear-gradient(to top, var(--bg-deep) 60%, transparent);
+  }
+
+  .footer-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn-top {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    background: rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  .btn-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-gold), var(--saffron));
+    transition: width 0.4s ease;
+  }
+
+  .btn-action {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-gold);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader">
+  <img src="hanuman.png" alt="Hanuman">
+  <div class="loader-text">Jai Shri Ram</div>
+</div>
+
+<div class="app-container">
+  <div class="bg-gradient-mesh"></div>
+
+  <header>
+    <button class="btn-action" id="theme-toggle">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </header>
+
+  <div class="focus-overlay"></div>
+
+  <main id="prayer-scroll"></main>
+
+  <div class="mobile-footer">
+    <div class="footer-row">
+      <div class="progress-track">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+      <button class="btn-action btn-top" id="btn-top">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const verses = [
+  { text: "Hanuman\nChalisa", isTitle: true },
+  { text: "Shri Guru Charan Sarooja-raj\nNija manu Mukura Sudhaari\nBaranau Rahubhara Bimala Yasha\nJo Dayaka Phala Chari", num: "Doha I" },
+  { text: "Budhee-Heen Thanu Jannikay\nSumirow Pavana Kumara\nBala-Budhee Vidya Dehoo Mohee\nHarahu Kalesha Vikaara", num: "Doha II" },
+  { text: "Jai Hanuman gyan gun sagar\nJai Kapis tihun lok ujagar\nRam doot atulit bal dhama\nAnjaani-putra Pavan sut nama", num: "I" },
+  { text: "Mahabir Bikram Bajrangi\nKumati nivar sumati Ke sangi\nKanchan varan viraj subesa\nKanan Kundal Kunchit Kesha", num: "II" },
+  { text: "Hath Vajra Aur Dhuvaje Viraje\nKaandhe moonj janehu sajai\nSankar suvan kesri Nandan\nTej prataap maha jag vandan", num: "III" },
+  { text: "Vidyavaan guni ati chatur\nRam kaj karibe ko aatur\nPrabu charitra sunibe-ko rasiya\nRam Lakhan Sita man Basiya", num: "IV" },
+  { text: "Sukshma roop dhari Siyahi dikhava\nVikat roop dhari lank jarava\nBhima roop dhari asur sanghare\nRamachandra ke kaj sanvare", num: "V" },
+  { text: "Laye Sanjivan Lakhan Jiyaye\nShri Raghuvir Harashi ur laye\nRaghupati Kinhi bahut badai\nTum mam priye Bharat-hi-sam bhai", num: "VI" },
+  { text: "Sahas badan tumharo jash gaave\nAsa-kahi Shripati kanth lagaave\nSankadhik Brahmaadi Muneesa\nNarad-Sarad sahit Aheesa", num: "VII" },
+  { text: "Jam Kuber Digpaal Jahan te\nKavi kovid kahi sake kahan te\nTum upkar Sugreevahin keenha\nRam milaye rajpad deenha", num: "VIII" },
+  { text: "Tumharo mantra Vibheeshan maana\nLankeshwar Bhaye Sub jag jana\nJug sahastra jojan par Bhanu\nLeelyo tahi madhur phal janu", num: "IX" },
+  { text: "Prabhu mudrika meli mukh mahee\nJaladhi langhi gaye achraj nahee\nDurgaam kaj jagath ke jete\nSugam anugraha tumhre tete", num: "X" },
+  { text: "Ram dwaare tum rakhvare\nHoat na agya binu paisare\nSub sukh lahae tumhari sar na\nTum rakshak kahu ko dar naa", num: "XI" },
+  { text: "Aapan tej samharo aapai\nTeenhon lok hank te kanpai\nBhoot pisaach Nikat nahin aavai\nMahavir jab naam sunavae", num: "XII" },
+  { text: "Nase rog harae sab peera\nJapat nirantar Hanumant beera\nSankat se Hanuman chudavae\nMan Karam Vachan dyan jo lavai", num: "XIII" },
+  { text: "Sab par Ram tapasvee raja\nTin ke kaj sakal Tum saja\nAur manorath jo koi lavai\nSohi amit jeevan phal pavai", num: "XIV" },
+  { text: "Charon Yug partap tumhara\nHai persidh jagat ujiyara\nSadhu Sant ke tum Rakhware\nAsur nikandan Ram dulhare", num: "XV" },
+  { text: "Ashta-sidhi nav nidhi ke dhata\nAs-var deen Janki mata\nRam rasayan tumhare pasa\nSada raho Raghupati ke dasa", num: "XVI" },
+  { text: "Tumhare bhajan Ram ko pavai\nJanam-janam ke dukh bisraavai\nAnth-kaal Raghuvir pur jayee\nJahan janam Hari-Bakht Kahayee", num: "XVII" },
+  { text: "Aur Devta Chit na dharehi\nHanumanth se hi sarve sukh karehi\nSankat kate-mite sab peera\nJo sumirai Hanumat Balbeera", num: "XVIII" },
+  { text: "Jai Jai Jai Hanuman Gosahin\nKripa Karahu Gurudev ki nyahin\nJo sat bar path kare kohi\nChutehi bandhi maha sukh hohi", num: "XIX" },
+  { text: "Jo yah padhe Hanuman Chalisa\nHoye siddhi sakhi Gaureesa\nTulsidas sada hari chera\nKeejai Nath Hridaye mein dera", num: "XX" },
+  { text: "Pavan Tanay Sankat Harana\nMangala Murati Roop\nRam Lakhan Sita Sahita\nHriday Basahu Soor Bhoop", num: "Doha" }
+];
+
+const container = document.getElementById('prayer-scroll');
+const progressFill = document.getElementById('progress-fill');
+
+verses.forEach((v, i) => {
+  const el = document.createElement('div');
+  el.className = 'verse-container' + (v.isTitle ? ' title-verse' : '');
+  el.dataset.index = i;
+
+  let html = '';
+  if (v.num) html += `<div class="verse-num">${v.num}</div>`;
+  html += `<div class="verse-text">${v.text}</div>`;
+
+  el.innerHTML = html;
+  container.appendChild(el);
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.verse-container').forEach(v => v.classList.remove('active'));
+      e.target.classList.add('active');
+      const idx = parseInt(e.target.dataset.index);
+      progressFill.style.width = `${((idx + 1) / verses.length) * 100}%`;
+
+      if (window.navigator.vibrate) window.navigator.vibrate(5);
+    }
+  });
+}, {
+  root: container,
+  threshold: 0.7,
+  rootMargin: "-20% 0px -20% 0px"
+});
+
+document.querySelectorAll('.verse-container').forEach(v => observer.observe(v));
+
+// Prevent browser scroll restoration
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+// Activate and center first verse on load
+const firstVerse = document.querySelector('.verse-container');
+if (firstVerse) {
+  firstVerse.classList.add('active');
+  progressFill.style.width = `${(1 / verses.length) * 100}%`;
+  // Disable snap, center first verse manually, then re-enable
+  container.style.scrollSnapType = 'none';
+  container.style.scrollBehavior = 'auto';
+  requestAnimationFrame(() => {
+    const vTop = firstVerse.offsetTop;
+    const vH = firstVerse.offsetHeight;
+    const cH = container.clientHeight;
+    container.scrollTop = vTop - (cH / 2) + (vH / 2);
+    setTimeout(() => {
+      container.style.scrollSnapType = 'y mandatory';
+      container.style.scrollBehavior = 'smooth';
+    }, 50);
+  });
+}
+
+// Back to top button
+const btnTop = document.getElementById('btn-top');
+container.addEventListener('scroll', () => {
+  btnTop.classList.toggle('visible', container.scrollTop > 400);
+});
+btnTop.addEventListener('click', () => {
+  const first = document.querySelector('.verse-container');
+  if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+// Loading screen
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 1500);
+});
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
+</script>
+</body>
+</html>
