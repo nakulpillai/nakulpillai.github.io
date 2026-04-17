@@ -1,10 +1,15 @@
 {
-  "version": "1.0.7",
+  "version": "1.0.8",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
-  "updated": "2026-04-14",
+  "updated": "2026-04-17",
   "changelog": [
+    {
+      "version": "1.0.8",
+      "date": "2026-04-17",
+      "notes": "Add FD number/name/account number fields, bank dropdown filter, home count widgets, and archived checkbox filter"
+    },
     {
       "version": "1.0.7",
       "date": "2026-04-14",
