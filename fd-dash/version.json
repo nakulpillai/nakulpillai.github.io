@@ -1,10 +1,15 @@
 {
-  "version": "1.0.9",
+  "version": "1.1.0",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
   "updated": "2026-04-20",
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-04-20",
+      "notes": "Move primary data store to Drive appDataFolder — atomic whole-file writes (no more clear-then-write race) and free revision history; Google Sheet becomes an optional one-way export. You'll be asked to re-consent once for the new Drive scope."
+    },
     {
       "version": "1.0.9",
       "date": "2026-04-20",
