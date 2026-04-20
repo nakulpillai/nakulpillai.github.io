@@ -1,10 +1,15 @@
 {
-  "version": "1.0.8",
+  "version": "1.0.9",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
-  "updated": "2026-04-17",
+  "updated": "2026-04-20",
   "changelog": [
+    {
+      "version": "1.0.9",
+      "date": "2026-04-20",
+      "notes": "Harden security (encrypted storage, persistent token, write queue, forced PIN, sign-out) and polish iOS safe-area in Settings header and bottom nav"
+    },
     {
       "version": "1.0.8",
       "date": "2026-04-17",
