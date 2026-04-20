@@ -1,10 +1,15 @@
 {
-  "version": "1.1.0",
+  "version": "1.1.1",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
   "updated": "2026-04-20",
   "changelog": [
+    {
+      "version": "1.1.1",
+      "date": "2026-04-20",
+      "notes": "Face ID fast-unlock via WebAuthn PRF — enroll once in Settings and Face ID alone unlocks the app without a PIN each session (PIN stays as backup). Master-key crypto refactor with automatic migration; no re-setup needed."
+    },
     {
       "version": "1.1.0",
       "date": "2026-04-20",
