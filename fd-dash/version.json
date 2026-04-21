@@ -1,10 +1,15 @@
 {
-  "version": "1.1.1",
+  "version": "1.1.2",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
-  "updated": "2026-04-20",
+  "updated": "2026-04-21",
   "changelog": [
+    {
+      "version": "1.1.2",
+      "date": "2026-04-21",
+      "notes": "Sync all user data via Drive — settings, API key, and your PIN-wrapped master key now live in Drive's appDataFolder alongside your FDs. Sign in on a new device and it drops straight to the Lock Screen: your existing PIN unlocks everything, no re-setup. New 4-step onboarding prefills your name and email from Google. You'll be asked to re-consent once for the new profile scopes."
+    },
     {
       "version": "1.1.1",
       "date": "2026-04-20",
