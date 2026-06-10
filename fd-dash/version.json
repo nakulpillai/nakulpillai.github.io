@@ -1,10 +1,15 @@
 {
-  "version": "1.1.4",
+  "version": "1.2.0",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
-  "updated": "2026-04-21",
+  "updated": "2026-06-10",
   "changelog": [
+    {
+      "version": "1.2.0",
+      "date": "2026-06-10",
+      "notes": "Simplify storage — your Google Sheet is now the single source of truth (open/edit it directly from Settings). Removes the PIN/Face ID lock and Drive sync layer; Google sign-in is the only auth. Better receipt scanning: upgraded vision model (Claude Opus 4.8) reads grayscale scans with guaranteed-valid extraction. NOTE: if you have data from v1.1.x, open the old version's Settings → 'Export to Google Sheet' before updating, or ask for a one-time import."
+    },
     {
       "version": "1.1.4",
       "date": "2026-04-21",
