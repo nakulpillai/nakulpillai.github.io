@@ -1,10 +1,15 @@
 {
-  "version": "1.2.0",
+  "version": "1.2.1",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
   "updated": "2026-06-10",
   "changelog": [
+    {
+      "version": "1.2.1",
+      "date": "2026-06-10",
+      "notes": "Add 'From Gallery' option — scan receipts from existing photos, not just the camera."
+    },
     {
       "version": "1.2.0",
       "date": "2026-06-10",
