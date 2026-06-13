@@ -1,10 +1,15 @@
 {
-  "version": "1.2.3",
+  "version": "1.2.4",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
   "updated": "2026-06-12",
   "changelog": [
+    {
+      "version": "1.2.4",
+      "date": "2026-06-12",
+      "notes": "Fix Google Sheets saves being silently blocked by Content Security Policy — the app's CSP was preventing the Google API from creating the iframes it needs to write data."
+    },
     {
       "version": "1.2.3",
       "date": "2026-06-12",
