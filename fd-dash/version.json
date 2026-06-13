@@ -1,10 +1,15 @@
 {
-  "version": "1.2.2",
+  "version": "1.2.3",
   "name": "FD Portfolio",
   "description": "Personal fixed deposit portfolio dashboard for Indian banks",
   "icon": "icons/icon-512.png",
-  "updated": "2026-06-10",
+  "updated": "2026-06-12",
   "changelog": [
+    {
+      "version": "1.2.3",
+      "date": "2026-06-12",
+      "notes": "Fix Google Sheets saves failing when FDs have scanned receipt images — base64 images were exceeding Sheets' cell size limit. Images are now kept locally; all other data syncs normally."
+    },
     {
       "version": "1.2.2",
       "date": "2026-06-10",
